@@ -1,6 +1,6 @@
 import random
 import pytest
-import source.games as games
+import source.guessing_game as gg
 
 # Parameterize the test with different fixed random values
 @pytest.mark.parametrize("fixed_rand", [10, 50, 90])
@@ -17,7 +17,7 @@ def test_win_game(monkeypatch, capsys, fixed_rand):
     inputs = iter([str(fixed_rand)])
     monkeypatch.setattr("builtins.input", lambda _: next(inputs))
     
-    games.guessing_game()  # Run the game
+    gg.game()  # Run the game
     
     # Capture the output
     captured = capsys.readouterr().out
@@ -36,7 +36,7 @@ def test_lost_game(monkeypatch, capsys):
     inputs = iter(["30", "40", "20"])
     monkeypatch.setattr("builtins.input", lambda _: next(inputs))
     
-    games.guessing_game()  # Run the game
+    gg.game()  # Run the game
     
     captured = capsys.readouterr().out
     # Verify that the loss message is printed
@@ -54,7 +54,7 @@ def test_invalid_input(monkeypatch, capsys):
     inputs = iter(["abc", "60", "50"])
     monkeypatch.setattr("builtins.input", lambda _: next(inputs))
     
-    games.guessing_game()  # Run the game
+    gg.game()  # Run the game
     
     # Capture the output
     captured = capsys.readouterr().out
