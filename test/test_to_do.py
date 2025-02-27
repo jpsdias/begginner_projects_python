@@ -9,7 +9,6 @@ class TestComplete:
     # Runs after the end of every test
     def teardown_method(self, method):
         print(f"Tearing down {method}")
-        del self.value
 
     def test_get_value(self):
         assert todo.Complete.get_value(self) == False
@@ -22,3 +21,20 @@ class TestComplete:
     def test_toggle_value(self):
         todo.Complete.toggle_value(self)
         assert todo.Complete.get_value(self) is self.value
+
+class TestTask():
+    # Runs in the beginning of every test
+    def setup_method(self,method):
+        print(f"Setting up {method}")
+        self.description = "Pytest task."
+        self.state = False
+
+    # Runs after the end of every test
+    def teardown_method(self, method):
+        print(f"Tearing down {method}")
+
+    @pytest.mark.parametrize("description", [("Pytest task.")])
+    def test_create_task(self, description):
+        task = todo.Task(description, self.state)
+        assert task.description == description
+        assert task.state.get_value() == self.state

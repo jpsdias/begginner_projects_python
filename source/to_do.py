@@ -1,6 +1,6 @@
 class Complete():
-    def __init__(self):
-        self.value = False
+    def __init__(self, state: bool = False):
+        self.value = state
 
     def get_value(self):
         return self.value
@@ -12,7 +12,12 @@ class Complete():
         self.value = not self.value
 
     def __repr__(self):
-        """
-        Return a string representation of the BooleanHolder.
-        """
-        return f"BooleanHolder({self.value})"
+        return f"Complete({self.value})"
+    
+class Task(Complete):
+    def __init__(self, description: str, state: bool = False):
+        self.state = Complete(state)
+        self.description = description
+    
+    def __repr__(self):
+        return f"Task(description='{self.description}', completed={self.state.get_value()})"
